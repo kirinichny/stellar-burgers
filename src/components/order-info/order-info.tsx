@@ -1,21 +1,24 @@
 import { FC, useMemo } from 'react';
-import { Preloader } from '../ui/preloader';
-import { OrderInfoUI } from '../ui/order-info';
-import { TIngredient } from '@utils-types';
+import { OrderInfoUI, Preloader } from '@ui';
+import { TIngredient, TOrder } from '@utils-types';
+import { useParams } from 'react-router-dom';
+import { useSelector } from '../../services/store';
+import { getIngredients } from '../../services/ingredients/ingredients-slice';
+import { getIsAuthChecked } from '../../services/auth/auth-slice';
+import { getOrders } from '../../services/feed/feed-slice';
+import { getOrders as getUserOrders } from '../../services/orders/orders-slice';
 
 export const OrderInfo: FC = () => {
-  /** TODO: взять переменные orderData и ingredients из стора */
-  const orderData = {
-    createdAt: '',
-    ingredients: [],
-    _id: '',
-    status: '',
-    name: '',
-    updatedAt: 'string',
-    number: 0
-  };
+  const params = useParams();
+  const ingredients: TIngredient[] = useSelector(getIngredients);
+  const isAuth = useSelector(getIsAuthChecked);
+  const orders = useSelector(getOrders);
+  const userOrders = useSelector(getUserOrders);
+  const allOrders: TOrder[] = !isAuth ? orders : orders.concat(userOrders);
 
-  const ingredients: TIngredient[] = [];
+  const orderData: TOrder | undefined = allOrders.find(
+    (order) => order.number === Number(params.number)
+  );
 
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
