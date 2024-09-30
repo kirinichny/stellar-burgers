@@ -1,14 +1,23 @@
-import { FC, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { OrderInfoUI, Preloader } from '@ui';
 import { TIngredient, TOrder } from '@utils-types';
 import { useParams } from 'react-router-dom';
-import { useSelector } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
 import { getIngredients } from '../../services/ingredients/ingredients-slice';
 import { getIsAuthChecked } from '../../services/auth/auth-slice';
 import { getOrders } from '../../services/feed/feed-slice';
 import { getOrders as getUserOrders } from '../../services/orders/orders-slice';
+import { getOrdersData } from '../../services/orders/orders-thunks';
+import { getFeedData } from '../../services/feed/feed-thunks';
 
 export const OrderInfo: FC = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getOrdersData());
+    dispatch(getFeedData());
+  }, []);
+
   const params = useParams();
   const ingredients: TIngredient[] = useSelector(getIngredients);
   const isAuth = useSelector(getIsAuthChecked);
