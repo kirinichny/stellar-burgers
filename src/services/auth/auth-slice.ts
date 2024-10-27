@@ -8,7 +8,7 @@ import {
   updateUserData
 } from './auth-thunks';
 
-type TAuthState = {
+export type TAuthState = {
   user: TUser | null;
   isAuthChecked: boolean;
   isAuthenticated: boolean;

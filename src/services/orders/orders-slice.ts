@@ -2,7 +2,7 @@ import { createSlice, SerializedError } from '@reduxjs/toolkit';
 import { getOrdersData } from './orders-thunks';
 import { TOrder } from '@utils-types';
 
-type TOrdersState = {
+export type TOrdersState = {
   orders: TOrder[];
   isLoading: boolean;
   error: SerializedError | null;
@@ -20,16 +20,16 @@ const ordersSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
+      .addCase(getOrdersData.fulfilled, (state, action) => {
+        state.orders = action.payload;
+        state.error = null;
+        state.isLoading = false;
+      })
       .addCase(getOrdersData.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(getOrdersData.rejected, (state, action) => {
         state.error = action.error;
-        state.isLoading = false;
-      })
-      .addCase(getOrdersData.fulfilled, (state, action) => {
-        state.orders = action.payload;
-        state.error = null;
         state.isLoading = false;
       });
   },

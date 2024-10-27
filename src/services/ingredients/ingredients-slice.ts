@@ -2,7 +2,7 @@ import { createSlice, PayloadAction, SerializedError } from '@reduxjs/toolkit';
 import { TIngredient } from '@utils-types';
 import { getIngredientsData } from './ingredients-thunks';
 
-type TIngredientsState = {
+export type TIngredientsState = {
   ingredients: TIngredient[];
   isLoading: boolean;
   error: SerializedError | null;

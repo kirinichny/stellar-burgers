@@ -7,7 +7,7 @@ import {
 import { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
 import { createOrderBurger } from './burger-constructor-thunks';
 
-type TBurgerConstructorState = {
+export type TBurgerConstructorState = {
   constructorItems: {
     bun: TConstructorIngredient | null;
     ingredients: TConstructorIngredient[];
