@@ -2,7 +2,7 @@ import { createSlice, PayloadAction, SerializedError } from '@reduxjs/toolkit';
 import { TOrdersData } from '@utils-types';
 import { getFeedData } from './feed-thunks';
 
-type TFeedState = {
+export type TFeedState = {
   feed: TOrdersData;
   isLoading: boolean;
   error: SerializedError | null;
